@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KenyAI: Kenya Accelerates Intelligence</title>
+<style>
+:root{--sun:#F6A21E;--earth:#B5541C;--grass:#4E8F3A;--sand:#FFF3D6;--ink:#3A2410;--sky:#FFD36E}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;font-family:"Nunito","Varela Round","Arial Rounded MT Bold","Chalkboard SE","Trebuchet MS",sans-serif;font-weight:700;background:var(--sand);color:var(--ink);font-size:1.15rem;line-height:1.5}
+nav{position:sticky;top:0;z-index:10;display:flex;gap:4px;background:var(--earth);padding:8px;overflow-x:auto}
+nav a{flex:1;min-width:max-content;text-align:center;color:#fff;text-decoration:none;font-weight:bold;padding:10px 12px;border-radius:999px;font-size:1rem}
+nav a:active,nav a:focus{background:var(--sun);color:var(--ink)}
+section{padding:32px 16px;max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:"Arco","Chalkboard SE","Marker Felt","Arial Rounded MT Bold","Comic Sans MS","Trebuchet MS",sans-serif;font-weight:900;color:#3F7A2E;letter-spacing:.03em;text-transform:uppercase;-webkit-text-stroke:1.5px #3F7A2E;paint-order:stroke fill;text-shadow:0 3px 0 rgba(53,102,42,.25)}
+h1{font-size:2rem;margin:.2em 0;line-height:1.15}
+h2{font-size:1.6rem;margin:0 0 12px}
+h3{font-size:1.2rem}
+.hero{text-align:center;background:linear-gradient(var(--sky),var(--sand));max-width:none;padding-top:40px}
+.hero p.sub{font-size:1.4rem;font-weight:bold;color:var(--earth);margin:.3em 0 1em}
+.hero small{display:block;margin-top:12px;opacity:.8}
+.animal{display:inline-block;width:110px;height:110px;vertical-align:bottom;margin:0 2px}
+.part .animal{width:84px;height:84px;flex:none}
+.pet{width:100%;height:100%;overflow:visible}
+.pet .sh{fill:rgba(60,30,10,.18);transform-origin:100px 186px;animation:sh 3.2s ease-in-out infinite}
+.pet .bd{transform-origin:100px 185px;animation:br 3.2s ease-in-out infinite}
+.pet .hd{transform-origin:100px 125px;animation:tilt 5s ease-in-out infinite}
+.pet .eye{transform-box:fill-box;transform-origin:center;animation:blink 4.5s infinite}
+.pet .tl{animation:swish 2.4s ease-in-out infinite}
+.pet .ear{transform-box:fill-box;transform-origin:center;animation:flick 6s infinite}
+[data-pet=leo] .pet *{animation-delay:-1.2s}
+[data-pet=gir] .pet *{animation-delay:-2.4s}
+@keyframes br{0%,100%{transform:scale(1,1)}50%{transform:scale(1.02,1.035)}}
+@keyframes sh{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+@keyframes tilt{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg)}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
+@keyframes swish{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(12deg)}}
+@keyframes flick{0%,88%,100%{transform:rotate(0)}92%{transform:rotate(-12deg)}96%{transform:rotate(6deg)}}
+@media (prefers-reduced-motion:reduce){.pet *{animation:none!important}}
+.part ul{margin:6px 0 0;padding-left:20px}
+.part h3{margin:0}
+.bar{height:22px;background:#eadbb8;border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--grass);transition:width .5s}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.badge{padding:8px 12px;border-radius:999px;background:#eadbb8;opacity:.6;font-size:.95rem}
+.badge.on{background:var(--sun);opacity:1}
+#basket{position:fixed;right:10px;bottom:10px;z-index:20;background:#fff;border:3px solid var(--earth);border-radius:50%;width:76px;height:76px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:0 4px 10px #0003}
+#basket b{font-size:1rem}
+.eggs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.egg{font-size:2.6rem;background:none;box-shadow:none;padding:4px;min-height:0}
+footer{text-align:center;padding:24px 16px 100px;font-size:.9rem;opacity:.8}
+.ph{background:#fff7b3;border-radius:6px;padding:0 4px}
+#assess .card{background:linear-gradient(#fff,#fff6dc);border:4px solid var(--sun);border-radius:28px;box-shadow:0 8px 0 #e3b24a;padding:20px}
+.coach{display:flex;align-items:center;gap:12px}
+.coach .animal{width:120px;height:120px;flex:none;cursor:pointer}
+.bubble{position:relative;flex:1;background:var(--sky);border:3px solid var(--earth);border-radius:22px;padding:12px 16px;box-shadow:inset 0 -4px 0 rgba(181,84,28,.18)}
+.bubble::before{content:"";position:absolute;left:-13px;top:50%;margin-top:-10px;border:10px solid transparent;border-left:0;border-right:12px solid var(--earth)}
+.bubble::after{content:"";position:absolute;left:-8px;top:50%;margin-top:-7px;border:7px solid transparent;border-left:0;border-right:9px solid var(--sky)}
+#q{margin:0;font-size:1.2rem}
+.dir{display:block;font-size:.85rem;color:var(--earth);margin-bottom:4px}
+.qn{display:inline-block;margin:0 0 10px;background:var(--grass);color:#fff;border-radius:999px;padding:4px 14px;font-size:.9rem}
+.nm{display:block;margin:6px 0 10px;opacity:.8}
+#assess .opts button.good{background:#e8f5e2;border-color:var(--grass)}
+#assess .opts button.bad{background:#fff0dc;border-color:var(--earth)}
+#res{display:grid;gap:12px;margin-top:10px}
+.pet .mo{transform-box:fill-box;transform-origin:center top;opacity:0}
+.pet.talking .mo{opacity:1;animation:talk .26s ease-in-out infinite alternate}
+@keyframes talk{from{transform:scaleY(.25)}to{transform:scaleY(1)}}
+.animal{cursor:pointer}
+.glow{background:#fff3c4;border-radius:12px;outline:4px solid var(--grass);animation:glow 1.2s ease-in-out 4}
+@keyframes glow{50%{outline-color:var(--sun);transform:scale(1.02)}}
+#say{display:block;margin:0 auto 6px;border-radius:999px}
+#assess .opts{counter-reset:o;gap:12px}
+#assess .opts button{counter-increment:o;display:flex;align-items:center;gap:12px;background:#fff;border:3px solid var(--sun);border-radius:20px;padding:12px 16px;box-shadow:0 5px 0 #e3b24a;font-size:1.15rem}
+#assess .opts button::before{content:counter(o,upper-alpha);flex:none;width:38px;height:38px;border-radius:50%;background:var(--grass);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900}
+#assess .opts button:active,#assess .opts button:focus{background:#fff3c4;border-color:var(--grass);transform:translateY(3px);box-shadow:0 2px 0 #e3b24a}
+#fb{min-height:0;margin:14px 0 0;padding:12px 16px;border-radius:18px;background:#e8f5e2;border:3px solid var(--grass);text-align:center}
+#fb.try{background:#fff0dc;border-color:var(--earth)}
+#fb:empty{display:none}
+#startQ{display:block;margin:12px auto 0;font-size:1.25rem;padding:16px 36px;border-radius:999px}
+.pet .bw,.pet .ch{transform-box:fill-box;transform-origin:center;transition:opacity .3s}
+.pet.talking .bw{animation:brow .6s ease-in-out infinite alternate}
+.pet.talking .eye{scale:1.1}
+.pet.talking .ch{opacity:.85}
+.pet.cheer .eye{scale:1.05 .7}
+.pet.cheer .ch{scale:1.3}
+.pet.cheer{transform-origin:50% 100%;animation:jump .7s ease-in-out 1}
+.pet.cheer .sh{animation:shjump .7s ease-in-out 1;animation-delay:0s!important}
+@keyframes jump{0%{transform:translateY(0) scale(1.06,.92)}35%{transform:translateY(-34px) scale(.96,1.06)}70%{transform:translateY(0) scale(1.06,.92)}100%{transform:translateY(0) scale(1)}}
+@keyframes shjump{35%{transform:scale(.6);opacity:.5}}
+@media (prefers-reduced-motion:reduce){.pet.cheer{animation:none!important}}
+.pet.kind .hd{animation:lean 1.6s ease-in-out infinite;animation-delay:0s!important}
+.pet.kind .bw{translate:0 -3px}
+@keyframes brow{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+@keyframes hop{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-8px) rotate(-4deg)}}
+@keyframes lean{0%,100%{transform:rotate(0)}50%{transform:rotate(7deg)}}
+[data-pet=lion] .pet.talking .eye{scale:1.05 .8}
+.ask{margin:6px 0 0}
+#lesson .card{background:linear-gradient(#fff,#fff6dc);border:4px solid var(--sun);border-radius:28px;box-shadow:0 8px 0 #e3b24a;padding:20px}
+#lq{margin:0;font-size:1.2rem}
+#lesson .opts button.good{background:#e8f5e2;border-color:var(--grass)}
+#lesson .opts button.bad{background:#fff0dc;border-color:var(--earth)}
+#lres{display:grid;gap:12px;margin-top:10px}
+#lsay{display:block;margin:0 auto 6px;border-radius:999px}
+#lesson .opts{counter-reset:o;gap:12px}
+#lesson .opts button{counter-increment:o;display:flex;align-items:center;gap:12px;background:#fff;border:3px solid var(--sun);border-radius:20px;padding:12px 16px;box-shadow:0 5px 0 #e3b24a;font-size:1.15rem}
+#lesson .opts button::before{content:counter(o,upper-alpha);flex:none;width:38px;height:38px;border-radius:50%;background:var(--grass);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900}
+#lesson .opts button:active,#lesson .opts button:focus{background:#fff3c4;border-color:var(--grass);transform:translateY(3px);box-shadow:0 2px 0 #e3b24a}
+#lfb{min-height:0;margin:14px 0 0;padding:12px 16px;border-radius:18px;background:#e8f5e2;border:3px solid var(--grass);text-align:center}
+#lfb.try{background:#fff0dc;border-color:var(--earth)}
+#lfb:empty{display:none}
+#fb.soft,#lfb.soft{background:#fff6dc;border-color:var(--sun);color:var(--ink)}
+.big{font-size:2.4rem;text-align:center;background:#fff;border:3px dashed var(--sun);border-radius:20px;padding:14px;margin:12px 0;min-height:80px;display:flex;align-items:center;justify-content:center;line-height:1.2}
+.big[hidden]{display:none}
+#lroad ol{list-style:none;padding:0;margin:12px 0;display:grid;gap:8px}
+#lroad li{background:#fff;border:3px solid var(--sun);border-radius:16px;padding:10px 14px}
+#lroad li small{display:block;opacity:.85}
+.hero .animal{width:min(22vw,110px);height:min(22vw,110px)}
+.page{display:none;padding-bottom:110px}
+.page.on{display:block}
+.hero.on{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;min-height:100svh;text-align:center}
+#startBtn{border:4px solid #fff;font-size:1.3rem;padding:16px 44px;border-radius:999px;box-shadow:0 5px 0 #35662a,0 0 0 2px rgba(53,102,42,.25)}
+body[data-pg=welcome] #basket,body[data-pg=roadmap] #basket{display:none}
+#basket{cursor:pointer}
+.road{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.road::-webkit-scrollbar{display:none}
+.road .card{flex:0 0 100%;scroll-snap-align:start;margin:0;box-sizing:border-box}
+.road .part{flex-direction:column;align-items:center}
+.road .part .animal{width:130px;height:130px}
+.road .part ul{text-align:left}
+.swipebar{display:flex;align-items:center;justify-content:center;gap:16px;margin:14px 0 4px}
+.swipebar button{padding:8px 18px;min-height:44px}
+#dots i{display:inline-block;width:12px;height:12px;border-radius:50%;background:#eadbb8;margin:0 4px}
+#dots i.on{background:var(--grass)}
+.hint{text-align:center;opacity:.8;margin:4px 0 12px}
+#toAssess{display:block;margin:10px auto 0;border:4px solid #fff;border-radius:999px;padding:16px 28px}
+#backBtn{margin-bottom:12px}
+/* ---- modern look ---- */
+body{background:linear-gradient(180deg,#FFF8E6 0,#FFEBC2 100%);background-attachment:fixed}
+.hero{position:relative;overflow:hidden;background:radial-gradient(circle at 82% 8%,#FFE690 0,rgba(255,230,144,0) 38%),linear-gradient(180deg,#FFD770 0,#FFF3D6 100%);padding-bottom:110px}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:80px;pointer-events:none;background:radial-gradient(130% 100% at 18% 100%,#9CCB63 0 58%,transparent 59%),radial-gradient(130% 100% at 88% 100%,#74AE47 0 54%,transparent 55%)}
+.card,#assess .card,#lesson .card{background:#fff;border:0;border-radius:28px;box-shadow:0 14px 36px rgba(120,70,20,.13);padding:22px}
+button,.btn{background:linear-gradient(135deg,#5BA840,#3F7A2E);border:0;border-radius:999px;box-shadow:0 8px 18px rgba(63,122,46,.32);letter-spacing:.2px}
+button:active{transform:scale(.97);box-shadow:0 3px 8px rgba(63,122,46,.3)}
+button.alt{background:linear-gradient(135deg,#FFC24D,#F09A14);color:#3A2410;box-shadow:0 8px 18px rgba(240,154,20,.32)}
+#startBtn,#toAssess{border:4px solid #fff;box-shadow:0 10px 22px rgba(63,122,46,.35)}
+.opts button,#assess .opts button,#lesson .opts button{background:#FFF8EA;color:var(--ink);border:2px solid #F3DFB2;border-radius:20px;box-shadow:none}
+#assess .opts button:active,#assess .opts button:focus,#lesson .opts button:active,#lesson .opts button:focus{background:#fff;border-color:#5BA840;transform:scale(.98);box-shadow:0 6px 14px rgba(63,122,46,.18)}
+#assess .opts button.good,#lesson .opts button.good{background:#E6F5DE;border-color:#5BA840}
+#lesson .opts button.bad{background:#FFF0DC;border-color:#E58A3A}
+#assess .opts button::before,#lesson .opts button::before{background:linear-gradient(135deg,#5BA840,#3F7A2E)}
+.bubble{border:0;background:#FFF1CC;box-shadow:0 8px 18px rgba(120,70,20,.12)}
+.bubble::before{display:none}
+.bubble::after{border-right-color:#FFF1CC;left:-9px}
+#fb,#lfb{border:0;border-radius:18px}
+#fb.soft,#lfb.soft{background:#FFF6DC}
+.big{border:0;background:#FFF8EA;box-shadow:inset 0 0 0 2px #F3DFB2}
+#lroad li{border:0;box-shadow:0 6px 16px rgba(120,70,20,.1)}
+.badge{border-radius:999px}
+.bar{height:16px;background:#F3E3BD}
+.bar i{background:linear-gradient(90deg,#5BA840,#9CCB63)}
+#basket{border:0;box-shadow:0 10px 24px rgba(120,70,20,.28);background:#fff}
+.egg{background:none;box-shadow:none}
+.friends{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:8px 0}
+.friends button{padding:8px 16px;min-height:40px;font-size:.95rem;background:#FFF8EA;color:var(--ink);box-shadow:none;border:2px solid #F3DFB2}
+.friends button.sel{background:linear-gradient(135deg,#5BA840,#3F7A2E);color:#fff;border-color:#fff}
+.stage{position:relative;text-align:center}
+.gift .animal{width:150px;height:150px}
+.fly{position:absolute;left:50%;top:10px;font-size:2.6rem;opacity:0;pointer-events:none}
+.fly.go{animation:fly 1.2s ease-out}
+@keyframes fly{0%{opacity:1;transform:translate(-50%,110px) scale(1.3)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,20px) scale(.4)}}
+.thanks{background:#FFF1CC;border-radius:18px;padding:12px 16px;text-align:center;margin:8px 0 12px}
+.bag{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;text-align:center}
+.bag button{padding:10px 16px;min-height:44px;font-size:1rem}
+</style>
+</head>
+<body data-pg="welcome">
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<radialGradient id="gW" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#f4ead8"/><stop offset="1" stop-color="#d9c7a6"/></radialGradient>
+<radialGradient id="gK" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#6b5a50"/><stop offset=".6" stop-color="#2e241f"/><stop offset="1" stop-color="#1a1310"/></radialGradient>
+<radialGradient id="gG" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffd877"/><stop offset=".55" stop-color="#f0a935"/><stop offset="1" stop-color="#c27a16"/></radialGradient>
+<radialGradient id="gT" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffdc8a"/><stop offset=".55" stop-color="#f2b04a"/><stop offset="1" stop-color="#c98a2a"/></radialGradient>
+<radialGradient id="gB" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#b9783d"/><stop offset=".6" stop-color="#8a4f20"/><stop offset="1" stop-color="#5e3414"/></radialGradient>
+<radialGradient id="gP" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ffc4c4"/><stop offset=".55" stop-color="#f29a9a"/><stop offset="1" stop-color="#d97575"/></radialGradient>
+<radialGradient id="gC" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff6e0"/><stop offset=".55" stop-color="#f8e3b8"/><stop offset="1" stop-color="#e5c98f"/></radialGradient>
+</defs></svg>
+
+<div id="basket" role="button" tabindex="0" aria-live="polite" aria-label="Egg basket: open my progress"><span>🧺</span><b id="eggCount">0</b></div>
+
+<section id="welcome" class="hero page on">
+  <div><span class="animal" data-pet="cow"></span><span class="animal" data-pet="leo"></span><span class="animal" data-pet="gir"></span><span class="animal" data-pet="lion"></span></div>
+  <h1>KenyAI: Kenya Accelerates Intelligence</h1>
+  <p class="sub">Inspire. Interpret. Impart.</p>
+  <p>Jambo, friend! Welcome to KenyAI. Yuri, Zuri, Kazi and Turi are here to help you learn to read and write, with a short, fun lesson every day. Click start to see what learning journey awaits you!</p>
+  <button id="startBtn" type="button">Start</button>
+  
+</section>
+
+<section id="assess" class="page">
+  <h2>Find Your Level</h2>
+  <div class="card">
+    <p id="qn" class="qn">Meet your lion friend!</p>
+    <div class="coach">
+      <span class="animal" id="lion" data-pet="lion"></span>
+      <div class="bubble"><p id="q">Hi, I am Turi! Tap Start and I will ask you some questions!</p></div>
+    </div>
+    <small class="nm">Lion friend: Turi the lion</small>
+    <button class="alt" id="say" type="button">🔊 Hear it again</button>
+    <div class="opts" id="opts"></div>
+    <p class="msg" id="fb" aria-live="polite"></p>
+    <div id="res"></div>
+    <button id="startQ" type="button">Start</button>
+  </div>
+</section>
+<section id="lesson" class="page">
+  <h2 id="lt">Lesson</h2>
+  <div class="card">
+    <p id="lqn" class="qn"></p>
+    <div class="coach">
+      <span class="animal" id="lpet" data-pet="cow"></span>
+      <div class="bubble"><p id="lq"></p></div>
+    </div>
+    <small class="nm" id="lnm"></small>
+    <div id="lroad"></div>
+    <div class="big" id="lbig" hidden></div>
+    <button class="alt" id="lsay" type="button">🔊 Hear it again</button>
+    <div class="opts" id="lopts"></div>
+    <p class="msg" id="lfb" aria-live="polite"></p>
+    <div id="lres"></div>
+  </div>
+</section>
+
+<section id="roadmap" class="page">
+  <h2>Your Roadmap</h2>
+  <div class="road" id="swipe">
+    <div class="card part" id="part0"><span class="animal" data-pet="cow"></span><div>
+      <h3>1. Inspire</h3><small>Animal friend: Yuri the cow</small>
+      <ul><li id="lesson1">Phonetics</li><li>Alphabet</li><li>Increasing basic vocabulary</li><li>Words</li><li>Sentences</li><li>Why do they need to learn literacy</li><li>How is literacy relevant to them in daily life</li></ul></div></div>
+    <div class="card part" id="part1"><span class="animal" data-pet="leo"></span><div>
+      <h3>2. Interpret</h3><small>Animal friend: Zuri the leopard</small>
+      <ul><li>Simple reading books</li><li>Reading comprehension lessons</li></ul></div></div>
+    <div class="card part" id="part2"><span class="animal" data-pet="gir"></span><div>
+      <h3>3. Impart</h3><small>Animal friend: Kazi the giraffe</small>
+      <ul><li>Communication skills</li><li>Tests</li><li>Mastery building of literacy concepts</li><li>Training students to help younger kids learn to read</li></ul></div></div>
+  </div>
+  <div class="swipebar"><button id="prevS" type="button" aria-label="Previous part">◀</button><span id="dots"><i class="on"></i><i></i><i></i></span><button id="nextS" type="button" aria-label="Next part">▶</button></div>
+  <p class="hint">Swipe to see all 3 parts</p>
+  <button id="toAssess" type="button" hidden>▶ Click play to find your level</button>
+</section>
+
+<section id="progress" class="page">
+  <h2>My Progress</h2>
+  <button class="alt" id="backBtn" type="button">◀ Back</button>
+  <div class="card">
+    <p><b>Points:</b> <span id="pts">0</span> &nbsp; <b>Score:</b> <span id="score">0</span></p>
+    <div class="bar" role="progressbar" aria-label="Lesson progress"><i id="bar"></i></div>
+    <div class="badges">
+      <span class="badge" id="b1">⭐ [Badge 1 name]</span>
+      <span class="badge" id="b2">🏅 [Badge 2 name]</span>
+      <span class="badge" id="b3">🏆 [Badge 3 name]</span>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Crack your eggs!</h3>
+    <div class="eggs" id="eggs"></div>
+    <p class="msg" id="prize" aria-live="polite"></p>
+    <p><small>Every gift can be given to an animal friend to say thank you!</small></p>
+  </div>
+  <div class="card gift">
+    <h3>Give a gift to your friend</h3>
+    <div class="friends" id="friends"></div>
+    <div class="stage"><span class="animal" id="gpet" data-pet="cow"></span><span id="gfly" class="fly"></span></div>
+    <p class="thanks" id="thanks" aria-live="polite">Pick a friend, then pick a gift!</p>
+    <div class="bag" id="bag"></div>
+  </div>
+</section>
+
+
+
+<script>
+// Animal friends: hand-drawn shaded characters, animated with CSS (no libraries).
+function eye(x,y,r,c){c=c||'#2b1a10';return '<g class="eye"><circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="#fff"/><circle cx="'+x+'" cy="'+y+'" r="'+(r*.64)+'" fill="'+c+'"/><circle cx="'+(x-r*.22)+'" cy="'+(y-r*.28)+'" r="'+(r*.26)+'" fill="#fff"/></g>'}
+var D='#2e241f',SH='<ellipse class="sh" cx="100" cy="186" rx="54" ry="8"/>';
+function brow(x,y,c){return '<path class="bw" d="M'+(x-8)+' '+(y+3)+'Q'+x+' '+(y-4)+' '+(x+8)+' '+(y+3)+'" stroke="'+c+'" stroke-width="3.2" fill="none" stroke-linecap="round"/>'}
+function mouth(x,y,w,h){return '<g class="mo"><path d="M'+(x-w)+' '+(y-h*.5)+'Q'+x+' '+(y+h*1.8)+' '+(x+w)+' '+(y-h*.5)+'Z" fill="#5a1f1f"/><ellipse cx="'+x+'" cy="'+(y+h*.75)+'" rx="'+(w*.5)+'" ry="'+(h*.4)+'" fill="#e8808a"/></g>'}
+function blush(a,b,y,mx,my,mw,mh){return mouth(mx,my,mw,mh)+'<circle cx="'+a+'" cy="'+y+'" class="ch" r="6" fill="#ff9a9a" opacity=".5"/><circle cx="'+b+'" cy="'+y+'" class="ch" r="6" fill="#ff9a9a" opacity=".5"/>'}
+var A={
+cow:SH+'<g class="bd"><g class="tl" style="transform-origin:148px 135px"><path d="M148 135Q172 140 170 168" stroke="'+D+'" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="170" cy="171" rx="6" ry="9" fill="url(#gK)"/></g><rect x="70" y="160" width="18" height="24" rx="8" fill="url(#gW)"/><rect x="112" y="160" width="18" height="24" rx="8" fill="url(#gW)"/><rect x="70" y="178" width="18" height="7" rx="3" fill="url(#gK)"/><rect x="112" y="178" width="18" height="7" rx="3" fill="url(#gK)"/><ellipse cx="100" cy="143" rx="50" ry="38" fill="url(#gW)"/><ellipse cx="124" cy="148" rx="16" ry="12" fill="url(#gK)"/><ellipse cx="76" cy="132" rx="10" ry="8" fill="url(#gK)"/></g>'
++'<g class="hd"><g class="ear"><ellipse cx="54" cy="80" rx="17" ry="9" transform="rotate(-20 54 80)" fill="url(#gW)"/><ellipse cx="55" cy="80" rx="9" ry="4" transform="rotate(-20 55 80)" fill="url(#gP)"/></g><g class="ear"><ellipse cx="146" cy="80" rx="17" ry="9" transform="rotate(20 146 80)" fill="url(#gW)"/><ellipse cx="145" cy="80" rx="9" ry="4" transform="rotate(20 145 80)" fill="url(#gP)"/></g><path d="M72 52Q66 38 76 34M128 52Q134 38 124 34" stroke="#e5c98f" stroke-width="7" stroke-linecap="round" fill="none"/><ellipse cx="100" cy="86" rx="42" ry="38" fill="url(#gW)"/><ellipse cx="76" cy="70" rx="17" ry="15" fill="url(#gK)"/>'+eye(80,82,9)+eye(120,82,9)+'<ellipse cx="100" cy="108" rx="25" ry="16" fill="url(#gP)"/><ellipse cx="91" cy="107" rx="3" ry="4" fill="#a85a5a"/><ellipse cx="109" cy="107" rx="3" ry="4" fill="#a85a5a"/><path d="M92 116Q100 122 108 116" stroke="#a85a5a" stroke-width="2.5" fill="none" stroke-linecap="round"/>'+brow(80,64,'#f4ead8')+brow(120,64,'#5a3a28')+blush(64,136,98,100,117,9,7)+'</g>',
+leo:SH+'<g class="bd"><g class="tl" style="transform-origin:146px 140px"><path d="M146 140Q182 134 168 98" stroke="#f0a935" stroke-width="9" fill="none" stroke-linecap="round"/><circle cx="168" cy="97" r="6" fill="'+D+'"/></g><rect x="68" y="160" width="20" height="24" rx="9" fill="url(#gG)"/><rect x="112" y="160" width="20" height="24" rx="9" fill="url(#gG)"/><ellipse cx="78" cy="184" rx="13" ry="5" fill="url(#gC)"/><ellipse cx="122" cy="184" rx="13" ry="5" fill="url(#gC)"/><ellipse cx="100" cy="145" rx="46" ry="36" fill="url(#gG)"/><ellipse cx="100" cy="156" rx="26" ry="20" fill="url(#gC)"/><g fill="'+D+'"><circle cx="70" cy="132" r="5"/><circle cx="84" cy="124" r="4"/><circle cx="126" cy="130" r="5"/><circle cx="136" cy="146" r="4"/><circle cx="64" cy="150" r="4"/><circle cx="114" cy="122" r="3.5"/></g></g>'
++'<g class="hd"><g class="ear"><circle cx="62" cy="62" r="15" fill="url(#gG)"/><circle cx="62" cy="63" r="8" fill="url(#gP)"/></g><g class="ear"><circle cx="138" cy="62" r="15" fill="url(#gG)"/><circle cx="138" cy="63" r="8" fill="url(#gP)"/></g><ellipse cx="100" cy="88" rx="42" ry="36" fill="url(#gG)"/><g fill="'+D+'"><circle cx="88" cy="64" r="3"/><circle cx="100" cy="60" r="3"/><circle cx="112" cy="64" r="3"/><circle cx="68" cy="82" r="3"/><circle cx="132" cy="82" r="3"/></g>'+eye(80,84,8,'#3a7d2c')+eye(120,84,8,'#3a7d2c')+'<ellipse cx="100" cy="104" rx="22" ry="15" fill="url(#gC)"/><path d="M93 98Q100 94 107 98Q100 108 93 98Z" fill="url(#gP)"/><path d="M100 105L100 108M88 107Q100 120 112 107" stroke="'+D+'" stroke-width="2" fill="none" stroke-linecap="round"/>'+brow(80,67,'#2e241f')+brow(120,67,'#2e241f')+blush(66,134,100,100,113,8,6)+'</g>',
+gir:SH+'<g class="bd"><g class="tl" style="transform-origin:140px 150px"><path d="M140 150Q160 155 158 178" stroke="#c98a2a" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="158" cy="180" rx="5" ry="7" fill="url(#gB)"/></g><rect x="72" y="162" width="16" height="22" rx="7" fill="url(#gT)"/><rect x="112" y="162" width="16" height="22" rx="7" fill="url(#gT)"/><rect x="72" y="178" width="16" height="7" rx="3" fill="url(#gB)"/><rect x="112" y="178" width="16" height="7" rx="3" fill="url(#gB)"/><ellipse cx="100" cy="148" rx="44" ry="30" fill="url(#gT)"/><ellipse cx="78" cy="142" rx="10" ry="8" fill="url(#gB)"/><ellipse cx="120" cy="150" rx="12" ry="9" fill="url(#gB)"/><ellipse cx="100" cy="166" rx="8" ry="6" fill="url(#gB)"/></g>'
++'<g class="hd"><path d="M82 142L87 62L113 62L118 142Z" fill="url(#gT)"/><ellipse cx="96" cy="100" rx="7" ry="9" fill="url(#gB)"/><ellipse cx="106" cy="80" rx="6" ry="7" fill="url(#gB)"/><ellipse cx="97" cy="124" rx="7" ry="8" fill="url(#gB)"/><g class="ear"><ellipse cx="68" cy="42" rx="12" ry="6" transform="rotate(-25 68 42)" fill="url(#gT)"/></g><g class="ear"><ellipse cx="132" cy="42" rx="12" ry="6" transform="rotate(25 132 42)" fill="url(#gT)"/></g><path d="M88 30L86 15M112 30L114 15" stroke="#8a4f20" stroke-width="4" stroke-linecap="round"/><circle cx="86" cy="13" r="5" fill="url(#gB)"/><circle cx="114" cy="13" r="5" fill="url(#gB)"/><ellipse cx="100" cy="48" rx="27" ry="22" fill="url(#gT)"/>'+eye(88,44,6.5)+eye(112,44,6.5)+'<ellipse cx="100" cy="58" rx="17" ry="12" fill="url(#gC)"/><circle cx="94" cy="56" r="2.2" fill="#a85a5a"/><circle cx="106" cy="56" r="2.2" fill="#a85a5a"/><path d="M93 63Q100 68 107 63" stroke="#a85a5a" stroke-width="2" fill="none" stroke-linecap="round"/>'+brow(88,31,'#8a4f20')+brow(112,31,'#8a4f20')+blush(78,122,55,100,64,7,5)+'</g>'
+};
+var mane='';for(var i=0;i<10;i++){var t=i*Math.PI/5;mane+='<circle cx="'+(100+46*Math.cos(t)).toFixed(1)+'" cy="'+(90+44*Math.sin(t)).toFixed(1)+'" r="17" fill="url(#gB)"/>'}
+mane+='<circle cx="100" cy="90" r="46" fill="url(#gB)"/>';
+A.lion=SH+'<g class="bd"><g class="tl" style="transform-origin:144px 150px"><path d="M144 150Q178 152 172 120" stroke="#f0a935" stroke-width="7" fill="none" stroke-linecap="round"/><ellipse cx="172" cy="116" rx="8" ry="11" fill="url(#gB)"/></g><rect x="68" y="160" width="20" height="24" rx="9" fill="url(#gG)"/><rect x="112" y="160" width="20" height="24" rx="9" fill="url(#gG)"/><ellipse cx="78" cy="184" rx="13" ry="5" fill="url(#gC)"/><ellipse cx="122" cy="184" rx="13" ry="5" fill="url(#gC)"/><ellipse cx="100" cy="150" rx="44" ry="32" fill="url(#gG)"/><ellipse cx="100" cy="160" rx="24" ry="18" fill="url(#gC)"/></g><g class="hd">'+mane+'<g class="ear"><circle cx="66" cy="54" r="11" fill="url(#gG)"/><circle cx="66" cy="55" r="6" fill="url(#gP)"/></g><g class="ear"><circle cx="134" cy="54" r="11" fill="url(#gG)"/><circle cx="134" cy="55" r="6" fill="url(#gP)"/></g><ellipse cx="100" cy="90" rx="38" ry="34" fill="url(#gG)"/>'+eye(84,84,7,'#6b3a12')+eye(116,84,7,'#6b3a12')+'<ellipse cx="100" cy="104" rx="22" ry="15" fill="url(#gC)"/><path d="M93 97Q100 93 107 97Q100 106 93 97Z" fill="url(#gP)"/><path d="M100 103L100 106M89 106Q100 117 111 106" stroke="'+D+'" stroke-width="2" fill="none" stroke-linecap="round"/>'+brow(84,68,'#6b3a12')+brow(116,68,'#6b3a12')+blush(70,130,98,100,107,9,6)+'</g>';
+var NM={cow:'Yuri the cow',leo:'Zuri the leopard',gir:'Kazi the giraffe',lion:'Turi the lion'};
+document.querySelectorAll('.animal').forEach(function(el){var k=el.getAttribute('data-pet');el.innerHTML='<svg class="pet" viewBox="0 0 200 200" role="img" aria-label="'+NM[k]+'">'+A[k]+'</svg>'});
+var DIR="";
+// 12 questions: 6 Inspire (s:0), 3 Interpret (s:1), 3 Impart (s:2). a = index of the right answer.
+var Q=[
+{s:0,d:"Hello! I am Turi the lion. I will ask you some questions.",t:"Which word starts with the sound b, like b, b, bear?",o:["🐻 bear","🐱 cat","☀️ sun"],a:0},
+{s:0,t:"Which one is the first letter of the alphabet?",o:["A","M","Z"],a:0},
+{s:0,t:"Which animal gives us milk?",o:["🐄 cow","🐍 snake","🦁 lion"],a:0},
+{s:0,t:"Which word says cat?",o:["cat","car","cut"],a:0},
+{s:0,t:"Which one is a sentence?",o:["The sun is hot.","sun hot the","Sun."],a:0},
+{s:0,t:"Why is reading helpful every day?",o:["It helps me read signs and stay safe","It makes me sleepy","It is not useful"],a:0},
+{s:1,t:"Tom has a red ball. Tom kicks the ball. What does Tom kick?",o:["a red ball","a big tree","a hat"],a:0},
+{s:1,t:"Neema sees a hot sun. She sits in the shade. Where does Neema sit?",o:["in the shade","in the rain","on the sun"],a:0},
+{s:1,t:"Neema has two goats. One is white. One is brown. How many goats does Neema have?",o:["1","2","3"],a:1},
+{s:2,t:"A friend says hello to you. What is a kind thing to say back?",o:["Hello! How are you?","Go away.","Nothing"],a:0},
+{s:2,t:"Which word is spelled the right way?",o:["happy","hapy","hapyy"],a:0},
+{s:2,t:"A little child cannot read a word. What is the best way to help?",o:["Read it slowly and say it together","Laugh at them","Walk away"],a:0}
+];
+var SEC=[6,3,3],PARTS=["Inspire","Interpret","Impart"],PET=["Yuri the cow","Zuri the leopard","Kazi the giraffe"];
+// Placeholder feedback lines: add your own so praise is not repeated.
+var GOOD=["Yay! You got it!","Wow, you are so smart!","Ding ding ding! That is right!","Super duper! You did it!","Hooray! That is the one!","Great thinking, my friend!","You are amazing! Yes!","Woohoo! Right answer!","I knew you could do it!","Roar-some job! Correct!"];
+var SOFT=["Thank you for thinking so hard! Learning is an adventure, and we will explore it together.","I love that you tried! Every day you practice, your brain gets stronger.","You are brave to try! Let us keep going, and soon you will shine.","Great effort! Lots of fun learning is coming your way.","I am so happy you are here! You are going to learn so much.","Keep your head up, my friend! You are on your way to something great."];
+var TRY=["Good try! You are learning so fast!","Almost there! You are getting closer!","Nice try! Mistakes help us grow.","That was a brave try! Let us learn it together.","Oops, that is okay! We will get it next time.","Keep going, my friend! You can do it!","Good thinking! Now you know for next time."];
+var GIFTS=[
+{e:"🥭",n:"juicy mango",k:"meal"},{e:"🍌",n:"sweet banana",k:"meal"},{e:"🥕",n:"crunchy carrot",k:"meal"},{e:"🌿",n:"fresh green grass",k:"meal"},{e:"🌽",n:"golden corn",k:"meal"},{e:"🍉",n:"cool watermelon",k:"meal"},{e:"🍍",n:"sweet pineapple",k:"meal"},{e:"🍠",n:"warm sweet potato",k:"meal"},{e:"🌾",n:"soft bundle of hay",k:"meal"},
+{e:"⚽",n:"bouncy football",k:"toy"},{e:"🪁",n:"colorful kite",k:"toy"},{e:"🧸",n:"cuddly teddy bear",k:"toy"},{e:"🎈",n:"bright balloon",k:"toy"},{e:"🥁",n:"happy drum",k:"toy"},{e:"🚂",n:"little toy train",k:"toy"},{e:"🧱",n:"box of building blocks",k:"toy"},{e:"🔔",n:"shiny bell",k:"toy"}];
+var THANKS={meal:["Yum yum! Thank you for the {n}! It is so tasty!","Mmm, a {n}! You are so kind to share with me!","Thank you, my friend! This {n} makes my tummy happy!","Wow, a {n}! That is just what I wanted! Thank you!"],toy:["Wow, a {n}! Thank you! Let us play together!","Yay, a {n}! You are the kindest friend ever!","Thank you so much for the {n}! I love it!","A {n} for me? Thank you, thank you!"]};
+var SND={cow:"Moo!",leo:"Rrrow!",gir:"Hmm hmm!",lion:"Roar!"};
+var S={pts:0,score:0,eggs:0,lastG:-1,start:"",gifts:[]};
+try{var sv=JSON.parse(localStorage.getItem("kenyai")||"null");if(sv)S=Object.assign(S,sv);}catch(e){}
+function save(){try{localStorage.setItem("kenyai",JSON.stringify(S));}catch(e){}}
+function $(id){return document.getElementById(id)}
+function pick(a){var n;do{n=Math.floor(Math.random()*a.length)}while(a.length>1&&n===S.lastG);S.lastG=n;return a[n]}
+var R={i:0,c:[0,0,0],locked:true,say:""},tok=0,timer,LION=$("lion");
+function clean(t){return t.replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF\uFE0F]/gu,"").replace(/[\[\]]/g,"")}
+// Built-in browser voice; replace with recorded audio later. The animal's mouth moves while it speaks.
+function speak(t,pet,mood){
+  var svg=pet&&pet.querySelector(".pet"),id=++tok,say=clean(t),ok=false;
+  document.querySelectorAll(".pet").forEach(function(x){x.classList.remove("talking","cheer","kind")});
+  clearTimeout(timer);
+  var end=function(){if(id===tok&&svg)svg.classList.remove("talking","cheer","kind")};
+  if(svg){svg.classList.add("talking");if(mood)svg.classList.add(mood)}
+  try{if(window.speechSynthesis){speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(say);u.lang="en-US";u.pitch=1.6;u.rate=.9;u.onend=end;u.onerror=end;speechSynthesis.speak(u);ok=true}}catch(e){}
+  timer=setTimeout(end,say.length*(ok?120:70)+1500);
+}
+function show(){
+  var q=Q[R.i];R.locked=false;
+  $("qn").textContent="Question "+(R.i+1)+" of "+Q.length;
+  var dd=q.d||DIR;$("q").innerHTML=(dd?'<small class="dir">'+dd+"</small>":"")+q.t+'<small class="dir ask">What do you think is the answer?</small>';
+  $("fb").textContent="";$("fb").className="msg";
+  var box=$("opts");box.innerHTML="";
+  var ord=q.o.map(function(_,k){return k}).sort(function(){return Math.random()-.5});
+  ord.forEach(function(k){var b=document.createElement("button");b.type="button";b.textContent=q.o[k];b.onclick=function(){answer(k)};box.appendChild(b)});
+  R.say=(q.d||DIR)+" "+q.t+" "+ord.map(function(k,n){return "Choice "+"ABC"[n]+": "+q.o[k]+"."}).join(" ")+" What do you think is the answer?";
+  speak(R.say,LION);
+}
+function answer(k){
+  if(R.locked)return;R.locked=true;
+  var q=Q[R.i],f=$("fb"),ok=k===q.a,msg=ok?pick(GOOD):pick(SOFT);
+  if(ok){R.c[q.s]++;S.score++;S.pts++;S.eggs++}
+  f.className=ok?"msg":"msg soft";f.textContent=msg;
+  if(ok){var bs=$("opts").children;for(var n=0;n<bs.length;n++){if(bs[n].textContent===q.o[q.a])bs[n].classList.add("good")}}
+  speak(msg,LION,ok?"cheer":"kind");render();save();
+  setTimeout(function(){R.i++;R.i<Q.length?show():finish()},ok?2600:4800);
+}
+function finish(){
+  var tot=R.c[0]+R.c[1]+R.c[2],pass=tot>=Math.ceil(Q.length*.75),lvl=2;
+  for(var j=0;j<3;j++){if(R.c[j]/SEC[j]<.75){lvl=j;break}}
+  if(!pass)lvl=0;
+  S.start=PARTS[lvl];save();
+  var msg=lvl===0
+    ?"You got "+tot+" out of "+Q.length+". Let us start at the very beginning with "+PET[0]+". Lesson 1 is Phonetics! Tap Start to play!"
+    :"You got "+tot+" out of "+Q.length+"! You can start with "+PARTS[lvl]+", with "+PET[lvl]+"! Tap Start to play!";
+  $("qn").textContent="All done!";$("q").textContent=msg;$("opts").innerHTML="";$("fb").textContent="";
+  $("res").innerHTML='<button id="begin" type="button">▶ Start Part '+(lvl+1)+": "+PARTS[lvl]+'</button><button class="alt" id="go" type="button">'+(lvl===0?"Go to Lesson 1: Phonetics":"Go to "+PARTS[lvl])+'</button><button id="again" type="button">Play again</button>';
+  $("go").onclick=function(){
+    go("roadmap");
+    var g=document.querySelector(".glow");if(g)g.classList.remove("glow");
+    sw.scrollLeft=lvl*(sw.clientWidth+12);
+    (lvl===0?$("lesson1"):$("part"+lvl)).classList.add("glow");
+  };
+  $("again").onclick=start;
+  $("begin").onclick=function(){startLesson(lvl)};
+  speak(msg,LION,lvl===0?"kind":"cheer");
+}
+function start(){R={i:0,c:[0,0,0],locked:true,say:""};$("res").innerHTML="";$("startQ").style.display="none";show()}
+function render(){
+  $("pts").textContent=S.pts;$("score").textContent=S.score;$("eggCount").textContent=S.eggs;
+  $("bar").style.width=Math.min(100,S.score*10)+"%";
+  [[1,"b1"],[3,"b2"],[6,"b3"]].forEach(function(p){$(p[1]).className="badge"+(S.score>=p[0]?" on":"")});
+  var e=$("eggs");e.innerHTML="";
+  for(var n=0;n<S.eggs;n++){var b=document.createElement("button");b.className="egg";b.type="button";b.textContent="🥚";b.setAttribute("aria-label","Crack egg");b.onclick=crack;e.appendChild(b)}
+}
+function crack(){S.eggs--;var g=GIFTS[Math.floor(Math.random()*GIFTS.length)];S.gifts.push(g);$("prize").textContent="🎁 Surprise! You found "+g.e+" "+g.n+" ("+(g.k==="meal"?"a meal":"a toy")+" for your animal friend!)";speak("Surprise! You found a "+g.n+"!");render();renderGifts();save();}
+$("startQ").onclick=start;
+$("say").onclick=function(){speak(R.say||"Hi, I am Turi! Tap Start and I will ask you some questions!",LION)};
+document.querySelectorAll(".animal").forEach(function(el){var k=el.getAttribute("data-pet");
+  if(el.id!=="lion")el.onclick=function(){speak("Hi! I am "+NM[k]+"!",el,"cheer")};
+  else el.onclick=function(){speak(R.say||"Hi, I am Turi the lion! Tap Start and I will ask you some questions!",el)}});
+// ---- Course: each part has lessons. The animal friend teaches first, then asks practice questions. ----
+var LES=[
+{name:"Inspire",pet:"cow",who:"Yuri the cow",lessons:[
+{n:"Phonetics",ov:"Learn the sounds that letters make.",c:[["Moo! Every letter has a sound. The letter M says mmm, like mmm, mango!","🥭 M m"],["The letter K says k, k, like k, k, kite!","🪁 K k"],["Now say it with me: mmm, k, mmm, k! You are doing great!","m  k"]],q:[
+{t:"Which word starts with the sound m, like m, m, mango?",o:["🥭 mango","🐱 cat","🐟 fish"],a:0},
+{t:"Which word starts with the sound k, like k, k, kite?",o:["🪁 kite","🐸 frog","🌙 moon"],a:0}]},
+{n:"Alphabet",ov:"Meet the letters from A to Z.",c:[["The alphabet is a line of letters. It starts with A, then B, then C.","A B C"],["Letters can be big or small. Big M and small m are the same letter.","M m"],["Keep going: D, E, F, G. There are twenty six letters in all!","D E F G"]],q:[
+{t:"Which letter comes right after A?",o:["B","D","Z"],a:0},
+{t:"Which one is the letter M?",o:["N","M","W"],a:1}]},
+{n:"Basic Vocabulary",ov:"Learn new words for things around you.",c:[["Words are names for things. A banana is food. A chair is for sitting.","🍌 🪑 👟"],["Say them with me: banana, chair, shoe. The more words you know, the more you can say!","🍌 banana"]],q:[
+{t:"Which one can you eat?",o:["🍌 banana","🪑 chair","👟 shoe"],a:0}]},
+{n:"Words",ov:"Put sounds together to make words.",c:[["Sounds go together to make words. s, u, n. Sun!","s + u + n = sun"],["Look at the word sun. It starts with s, like sss.","sun"]],q:[
+{t:"Which word says sun?",o:["sun","sit","sad"],a:0}]},
+{n:"Sentences",ov:"Put words together to share an idea.",c:[["A sentence tells a whole idea. It starts with a big letter and ends with a dot.","I like milk."],["Words go in the right order. We say I like milk, not like I milk.","I like milk."]],q:[
+{t:"Which sentence is right?",o:["I like milk.","like I milk","Milk I."],a:0}]},
+{n:"Why We Read and Write",ov:"Find out why literacy is special.",c:[["Reading lets you learn about the world, like animals, stars, and stories!","📖 🌍"],["Writing lets you share your ideas with other people, too.","💬 ✏️"]],q:[
+{t:"Why do we learn to read?",o:["So I can learn and share ideas","So I can sleep more","So I can run faster"],a:0}]},
+{n:"Reading in Daily Life",ov:"See how reading helps you every day.",c:[["At the market, you can read prices and signs. At school, you can read your name.","🛒 🏫"],["On the road, signs keep you safe. Reading helps you every single day!","🛑 ⚠️"]],q:[
+{t:"How does reading help you at the market?",o:["I can read prices and signs","It makes things cost less","It does not help"],a:0}]}]},
+{name:"Interpret",pet:"leo",who:"Zuri the leopard",lessons:[
+{n:"Simple Reading Books",ov:"Read short stories and find the facts.",c:[["A story tells what happens. Listen for who and what.","📖"],["Read slowly and picture it in your mind. Tom has a red ball. Can you see a red ball?","🔴 Tom has a red ball."],["After a story, ask yourself: who, what, and where? Good readers do this!","Who? What? Where?"]],q:[
+{t:"Juma has a blue kite. The wind is strong. The kite flies up high. What flies up high?",o:["the kite","a bird","the sun"],a:0},
+{t:"Amina walks to school. She sees a big tree. She sits under the tree. Where does Amina sit?",o:["under the tree","on a bus","in a boat"],a:0},
+{t:"Mama cooks ugali. Juma is hungry. Juma eats the ugali. What does Juma eat?",o:["ugali","bread","rice"],a:0},
+{t:"It is a big, tall animal with a long neck. Which animal is it?",o:["giraffe","goat","frog"],a:0}]},
+{n:"Reading Comprehension",ov:"Understand what you read and answer questions.",c:[["Comprehension means understanding. Ask yourself why things happen.","Why?"],["Notice the details and the order of things: first, next, last.","1 2 3"]],q:[
+{t:"Baba has three cows. One cow is black. Two cows are white. How many cows are white?",o:["2","3","1"],a:0},
+{t:"The rain falls. Neema takes her umbrella. Why does Neema take her umbrella?",o:["because it is raining","because it is sunny","because she is sleepy"],a:0},
+{t:"First Sam wakes up. Then Sam eats breakfast. What does Sam do first?",o:["wakes up","eats breakfast","goes to bed"],a:0},
+{t:"Which word rhymes with cat?",o:["hat","dog","sun"],a:0}]}]},
+{name:"Impart",pet:"gir",who:"Kazi the giraffe",lessons:[
+{n:"Communication Skills",ov:"Speak and listen kindly.",c:[["Use kind words like please and thank you. They make people smile.","Please 🙂 Thank you"],["Listen when a friend talks. Then it is your turn. Speak clearly so people understand you.","👂 💬"]],q:[
+{t:"You want some water. What is a polite way to ask?",o:["Please may I have water?","Give me water now!","Water."],a:0},
+{t:"A friend is talking. What should you do?",o:["Listen and wait for your turn","Talk louder","Walk away"],a:0},
+{t:"You feel sick. What is the clearest thing to tell your teacher?",o:["I do not feel well. May I go home?","Home.","Sick me go."],a:0}]},
+{n:"Tests",ov:"Show what you know, calmly and bravely.",c:[["A test is a way to show what you learned. It is not scary! Take a deep breath.","📝"],["Read each question slowly. Think. Then answer. You can do it!","Read, Think, Answer"]],q:[
+{t:"Which is a good way to do a test?",o:["Read each question slowly","Guess very fast","Skip all the questions"],a:0}]},
+{n:"Mastery Building",ov:"Practice until reading and writing feel easy.",c:[["Practice makes strong readers. Check your spelling. Friend, f, r, i, e, n, d.","friend"],["End a sentence with the right mark. Use a dot for a telling sentence and a question mark for a question.",".   ?"]],q:[
+{t:"Which word is spelled the right way?",o:["friend","freind","frend"],a:0},
+{t:"Which sentence has the right ending mark?",o:["Where is my book?","Where is my book.","Where is my book,"],a:0}]},
+{n:"Helping Younger Kids Read",ov:"Learn to teach and cheer on younger children.",c:[["You can be a teacher too! Be patient and kind with younger children.","🌱"],["Say the sounds slowly together: d, o, g. Dog! Cheer for them every time.","d  o  g"]],q:[
+{t:"A younger child cannot read the word dog. What do you do first?",o:["Say the sounds slowly: d, o, g","Say it is too hard","Take the book away"],a:0},
+{t:"Why is it good to teach a younger child to read?",o:["It helps them and helps me learn more","It is a waste of time","It makes them sad"],a:0}]}]}
+];
+var L={lvl:0,li:0,ti:0,qi:0,c:0,tot:0,say:"",locked:true};
+function drawPet(el,k){el.setAttribute("data-pet",k);el.innerHTML='<svg class="pet" viewBox="0 0 200 200" role="img" aria-label="'+NM[k]+'">'+A[k]+"</svg>"}
+function lcur(){return LES[L.lvl].lessons[L.li]}
+function setBig(v){var b=$("lbig");if(v){b.textContent=v;b.hidden=false}else b.hidden=true}
+function clearUI(){$("lopts").innerHTML="";$("lfb").textContent="";$("lfb").className="msg";$("lres").innerHTML=""}
+function btn(label,fn,alt){var b=document.createElement("button");b.type="button";b.textContent=label;if(alt)b.className="alt";b.onclick=fn;$("lres").appendChild(b)}
+// Step 1: the roadmap of this part, lesson by lesson
+function startLesson(lvl){
+  var d=LES[lvl],hi="Hi! I am "+d.who+". Here is your roadmap. We will learn lesson by lesson!";
+  L={lvl:lvl,li:0,ti:0,qi:0,c:0,tot:0,say:hi,locked:true};
+  drawPet($("lpet"),d.pet);
+  $("lt").textContent="Part "+(lvl+1)+": "+d.name;$("lnm").textContent="Animal friend: "+d.who;
+  clearUI();setBig("");$("lesson").hidden=false;
+  $("lqn").textContent="Your roadmap";$("lq").textContent=hi;
+  $("lroad").innerHTML="<ol>"+d.lessons.map(function(x,i){return "<li><b>Lesson "+(i+1)+": "+x.n+"</b><small>"+x.ov+"</small></li>"}).join("")+"</ol>";
+  btn("▶ Start Lesson 1",function(){beginLesson(0)});
+  go("lesson");
+  speak(hi,$("lpet"));
+}
+// Step 2: the animal teaches in short cards
+function beginLesson(li){L.li=li;L.ti=0;$("lroad").innerHTML="";teach()}
+function teach(){
+  var x=lcur(),c=x.c[L.ti],last=L.ti===x.c.length-1;
+  clearUI();setBig(c[1]);
+  $("lqn").textContent="Lesson "+(L.li+1)+": "+x.n+" - Learn "+(L.ti+1)+" of "+x.c.length;
+  $("lq").textContent=c[0];L.say=c[0];
+  btn(last?"Practice time!":"Next ▶",function(){if(last){L.qi=0;setBig("");qshow()}else{L.ti++;teach()}});
+  speak(c[0],$("lpet"));
+}
+// Step 3: practice questions after the teaching
+function qshow(){
+  var x=lcur(),q=x.q[L.qi];L.locked=false;clearUI();
+  $("lqn").textContent="Lesson "+(L.li+1)+": "+x.n+" - Question "+(L.qi+1)+" of "+x.q.length;
+  $("lq").innerHTML=q.t+'<small class="dir ask">What do you think is the answer?</small>';
+  var box=$("lopts");
+  var ord=q.o.map(function(_,k){return k}).sort(function(){return Math.random()-.5});
+  ord.forEach(function(k){var b=document.createElement("button");b.type="button";b.textContent=q.o[k];b.onclick=function(){lanswer(k)};box.appendChild(b)});
+  L.say=q.t+" "+ord.map(function(k,n){return "Choice "+"ABC"[n]+": "+q.o[k]+"."}).join(" ")+" What do you think is the answer?";
+  speak(L.say,$("lpet"));
+}
+function lanswer(k){
+  if(L.locked)return;L.locked=true;
+  var x=lcur(),q=x.q[L.qi],f=$("lfb"),ok=k===q.a,msg=ok?pick(GOOD):pick(TRY);
+  L.tot++;if(ok){L.c++;S.score++;S.pts++;S.eggs++}
+  if(!ok)msg+=" The right answer is: "+q.o[q.a]+".";
+  f.className=ok?"msg":"msg try";f.textContent=msg;
+  var bs=$("lopts").children;
+  for(var n=0;n<bs.length;n++){if(bs[n].textContent===q.o[q.a])bs[n].classList.add("good");else if(!ok&&bs[n].textContent===q.o[k])bs[n].classList.add("bad")}
+  speak(msg,$("lpet"),ok?"cheer":"kind");render();save();
+  setTimeout(function(){L.qi++;L.qi<x.q.length?qshow():lessonDone()},ok?2600:5500);
+}
+function lessonDone(){
+  var P=LES[L.lvl].lessons;
+  if(L.li<P.length-1){
+    var nx=P[L.li+1],msg="Lesson "+(L.li+1)+" is done! Great learning today. Next is "+nx.n+".";
+    clearUI();$("lqn").textContent="Lesson complete!";$("lq").textContent=msg;
+    btn("▶ Start Lesson "+(L.li+2)+": "+nx.n,function(){beginLesson(L.li+1)});
+    speak(msg,$("lpet"),"cheer");
+  }else lfinish();
+}
+function lfinish(){
+  var n=L.tot,star=L.c>=Math.ceil(n*.75),next=star&&L.lvl<2;
+  var msg="You finished Part "+(L.lvl+1)+"! You got "+L.c+" out of "+n+". "+(star?"You are a star! Crack open your eggs in My Progress.":"Good practice! Let us play again to get even better.");
+  clearUI();$("lqn").textContent="All done!";$("lq").textContent=msg;
+  if(next)btn("▶ Start Part "+(L.lvl+2)+": "+LES[L.lvl+1].name,function(){startLesson(L.lvl+1)});
+  var lv=L.lvl;btn("Play again",function(){startLesson(lv)},1);
+  btn("🥚 My eggs",function(){go("progress")});
+  speak(msg,$("lpet"),star?"cheer":"kind");
+}
+$("lsay").onclick=function(){speak(L.say||"Hi! Let us learn together!",$("lpet"))};
+$("lpet").onclick=function(){speak(L.say||"Hi! Let us learn together!",this,"cheer")};
+render();
+// ---- One page at a time ----
+var cur="welcome",prevPg="welcome",sw=$("swipe");
+function go(id){
+  if(id===cur)return;
+  prevPg=cur;cur=id;document.body.setAttribute("data-pg",id);
+  document.querySelectorAll(".page").forEach(function(x){x.classList.toggle("on",x.id===id)});
+  try{speechSynthesis.cancel()}catch(e){}
+  document.querySelectorAll(".pet").forEach(function(x){x.classList.remove("talking","cheer","kind")});
+  window.scrollTo(0,0);
+}
+$("startBtn").onclick=function(){go("roadmap")};
+$("toAssess").onclick=function(){go("assess")};
+$("backBtn").onclick=function(){go(prevPg==="progress"?"welcome":prevPg)};
+$("basket").onclick=function(){go("progress")};
+$("basket").onkeydown=function(e){if(e.key==="Enter"||e.key===" "){go("progress")}};
+function slideIdx(){return Math.round(sw.scrollLeft/(sw.clientWidth+12))}
+function updDots(){
+  var i=slideIdx(),d=$("dots").children;
+  for(var n=0;n<d.length;n++)d[n].className=n===i?"on":"";
+  if(sw.scrollLeft+sw.clientWidth>=sw.scrollWidth-6)$("toAssess").hidden=false;
+}
+sw.addEventListener("scroll",updDots);
+function slideTo(i){i=Math.max(0,Math.min(2,i));sw.scrollTo({left:i*(sw.clientWidth+12),behavior:"smooth"})}
+$("prevS").onclick=function(){slideTo(slideIdx()-1)};
+$("nextS").onclick=function(){slideTo(slideIdx()+1)};
+// ---- Gifts: give them to an animal friend, who says thank you ----
+var FR=["cow","leo","gir","lion"],F="cow";
+function renderGifts(){
+  var fr=$("friends");fr.innerHTML="";
+  FR.forEach(function(k){var b=document.createElement("button");b.type="button";b.textContent=NM[k].split(" ")[0];if(k===F)b.className="sel";b.onclick=function(){F=k;drawPet($("gpet"),k);$("thanks").textContent="Hi! I am "+NM[k]+"! Pick a gift for me!";renderGifts()};fr.appendChild(b)});
+  var bag=$("bag");bag.innerHTML="";
+  if(!S.gifts.length){bag.textContent="Your gift bag is empty. Crack an egg to find a gift!";return}
+  S.gifts.forEach(function(g,i){var b=document.createElement("button");b.type="button";b.className="alt";b.textContent=g.e+" "+g.n;b.onclick=function(){give(i)};bag.appendChild(b)});
+}
+function give(i){
+  var g=S.gifts.splice(i,1)[0];if(!g)return;
+  var t=SND[F]+" "+pick(THANKS[g.k]).replace("{n}",g.n);
+  $("thanks").textContent=t;
+  var f=$("gfly");f.textContent=g.e;f.classList.remove("go");void f.offsetWidth;f.classList.add("go");
+  speak(t,$("gpet"),"cheer");renderGifts();save();
+}
+$("gpet").onclick=function(){speak("Hi! I am "+NM[F]+"! Pick a gift for me!",this,"cheer")};
+renderGifts();
+</script>
+</body>
+</html>
